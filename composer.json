@@ -6,7 +6,11 @@
     "type": "project",
     "require": {
         "php": ">=7.1.3",
-        "laravel/lumen-framework": "5.8.*"
+        "ellipsesynergie/api-response": "^0.16.0",
+        "laravel/lumen-framework": "5.8.*",
+        "tymon/jwt-auth": "^1.0",
+        "urameshibr/lumen-form-request": "^1.5",
+        "waavi/sanitizer": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",

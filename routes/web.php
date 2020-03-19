@@ -20,8 +20,11 @@ $router->get('/', function() use ($router) {
 
 $router->group(['prefix' => 'api'], function(Router $router) {
     $router->group(['prefix' => 'user'], function(Router $router) {
-        $router->get('/', 'App\Http\User\Controller\UserController@index');
         $router->post('/register', 'App\Http\User\Controller\UserController@register');
         $router->post('/login', 'App\Http\User\Controller\UserController@login');
+    });
+    $router->group(['prefix' => 'groups'], function(Router $router) {
+       $router->get('/', 'App\Http\Group\Controller\GroupController@index');
+       $router->post('/', 'App\Http\Group\Controller\GroupController@store');
     });
 });

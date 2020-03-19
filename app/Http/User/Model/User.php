@@ -2,6 +2,7 @@
 
 namespace App\Http\User\Model;
 
+use App\Http\Group\Model\Group;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject {
     use Authenticatable, Authorizable;
 
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -25,8 +27,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'email',
         'city',
         'precinct',
-        'organization_id',
-        'password'
+        'password',
+        'group_id',
+        'approved'
     ];
 
     /**
@@ -40,8 +43,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'updated_at'
     ];
 
-    public function organization() {
-        $this->belongsTo(Organization::class);
+    public function group() {
+        $this->belongsTo(Group::class);
     }
 
     /**

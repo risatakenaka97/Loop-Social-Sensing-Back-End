@@ -11,7 +11,7 @@ use Laravel\Lumen\Routing\Controller;
 
 class UserController extends Controller {
 
-    protected $user;
+    protected UserInterface $user;
 
     public function __construct(UserInterface $user)
     {
@@ -32,12 +32,12 @@ class UserController extends Controller {
      *
      * @return JsonResponse
      */
-    public function register(UserStoreRequest $request)
+    public function register(UserStoreRequest $request) : JsonResponse
     {
         return response()->json($this->user->create($request->json()->all()), 200);
     }
 
-    public function login(UserLoginRequest $request)
+    public function login(UserLoginRequest $request) : JsonResponse
     {
         $credentials = $request->only(['email', 'password']);
 
@@ -48,7 +48,7 @@ class UserController extends Controller {
         return $this->respondWithToken($token);
     }
 
-    protected function respondWithToken($token)
+    protected function respondWithToken($token) : JsonResponse
     {
         return response()->json([
             'token' => $token,

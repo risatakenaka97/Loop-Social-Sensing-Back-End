@@ -13,14 +13,13 @@ class CreateOrganizationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizations', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->string('administrator');
-            $table->string('email')->unique();
-            $table->string('city');
+            $table->integer('user_id')->unsigned();
             $table->string('website');
-            $table->string('password');
+            $table->unsignedSmallInteger('type');
+            $table->boolean('verified')->default(FALSE);
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateOrganizationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizations');
+        Schema::dropIfExists('groups');
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\User\Request;
+namespace App\Http\Group\Request;
 
 use App\Http\Base\Request\BaseFormRequest;
 
-class UserLoginRequest extends BaseFormRequest {
+class GroupStoreRequest extends BaseFormRequest {
 
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,9 @@ class UserLoginRequest extends BaseFormRequest {
     public function rules()
     {
         return [
-            'organization_id' => 'required|integer',
-            'name' => 'required|string',
-            'password' => 'required'
+            'name' => 'required|string|unique:groups',
+            'user_id' => 'required|integer',
+            'website' => 'required|string',
         ];
     }
 
@@ -38,18 +38,18 @@ class UserLoginRequest extends BaseFormRequest {
     public function messages()
     {
         return [
-            'organization_id.required' => 'Group id is required!',
-            'organization_id.integer' => 'Group id should be an integer!',
             'name.required' => 'Name is required!',
-            'password.required' => 'Password is required!',
+            'user_id.required' => 'Group administrator is required!',
+            'website.required' => 'Website is required!',
         ];
     }
 
     public function filters()
     {
         return [
-            'email' => 'trim|lowercase',
-            'name' => 'trim|capitalize|escape'
+            'name' => 'trim|capitalize|escape',
+            'website' => 'trim|escape|lowercase',
+
         ];
     }
 }

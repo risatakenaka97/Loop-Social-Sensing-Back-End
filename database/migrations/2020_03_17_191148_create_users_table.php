@@ -20,12 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('city');
             $table->string('precinct');
             $table->string('password');
-            $table->integer('organization_id')->unsigned();
+            $table->integer('group_id')->unsigned()->nullable();
             $table->boolean('approved')->default(FALSE);
             $table->timestamps();
-            $table->foreign('organization_id')
+            $table->foreign('group_id')
                 ->references('id')
-                ->on('organizations');
+                ->on('groups');
         });
     }
 

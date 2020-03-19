@@ -29,7 +29,7 @@ class UserStoreRequest extends BaseFormRequest {
             'password' => 'required|confirmed',
             'city' => 'required|string',
             'precinct' => 'required|string',
-            'organization_id' => 'required|integer|gt:0',
+            'organization_id' => 'integer|gt:0',
         ];
     }
 
@@ -47,16 +47,19 @@ class UserStoreRequest extends BaseFormRequest {
             'password.confirmed' => 'Password does not match',
             'city.required' => 'City is required!',
             'precinct.required' => 'Precinct is required!',
-            'organization_id.required' => 'Organization id is required!',
-            'organization_id.integer' => 'Organization id should be an integer!'
+            'organization_id.gt:0' => 'Group id should be greater then 0!',
+            'organization_id.integer' => 'Group id should be an integer!'
         ];
     }
 
     public function filters()
     {
         return [
+            'name' => 'trim|capitalize|escape',
             'email' => 'trim|lowercase',
-            'name' => 'trim|capitalize|escape'
+            'password' => fn($value, $options = []) => str_replace(" ", "", $value),
+            'city' => 'trim|capitalize|escape',
+            'precinct' => 'trim|capitalize|escape',
         ];
     }
 }

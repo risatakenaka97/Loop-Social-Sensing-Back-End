@@ -11,4 +11,9 @@ class UserObserver {
         $user->password = app('hash')->make($user->password);
     }
 
+    public function created(User $user)
+    {
+        //TODO send notification email
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Group\ServiceProvider\GroupServiceProvider;
 use App\Http\User\ServiceProvider\UserServiceProvider;
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -8,6 +9,7 @@ require_once __DIR__.'/../vendor/autoload.php';
     dirname(__DIR__)
 ))->bootstrap();
 
+require_once 'groups.php';
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -78,14 +80,12 @@ $app->singleton(
 |
 */
 
-$app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
-$app->register(EllipseSynergie\ApiResponse\Laravel\LumenServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Urameshibr\Providers\FormRequestServiceProvider::class);
-$app->register(UserServiceProvider::class);
 $app->register(Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+$app->register(UserServiceProvider::class);
+$app->register(GroupServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

@@ -15,7 +15,7 @@
 use Laravel\Lumen\Routing\Router;
 
 $router->get('/', function() use ($router) {
-    return $router->app->version();
+    return view('layout');
 });
 
 $router->group(['prefix' => 'api'], function(Router $router) {

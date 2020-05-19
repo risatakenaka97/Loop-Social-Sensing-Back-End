@@ -13,6 +13,11 @@ class UserObserver {
 
     public function created(User $user)
     {
+        $organizationUserBelongsTo = $user->organization;
+        if ($organizationUserBelongsTo->user_id === $user->id && $user->role != "ADMIN") {
+            $roles = config('roles');
+            $user->update(['role' => $roles['admin']]);
+        }
         //TODO send notification email
     }
 

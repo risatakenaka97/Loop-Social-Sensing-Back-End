@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Group\Request;
+namespace App\Http\Organization\Request;
 
 use App\Http\Base\Request\BaseFormRequest;
 
-class GroupStoreRequest extends BaseFormRequest {
+class OrganizationStoreRequest extends BaseFormRequest {
 
     /**
      * Determine if the user is authorized to make this request.

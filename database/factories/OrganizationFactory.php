@@ -13,11 +13,17 @@
 
 /** @var Factory $factory */
 
+use App\Http\Organization\Model\Organization;
 use Illuminate\Database\Eloquent\Factory;
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(Organization::class, function (Faker\Generator $faker) {
+    $type = rand(0, 1);
+    $organization = $type === 0 ? 'Community' : 'Department';
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
+        'name' => $faker->city." $organization",
+        'user_id' => rand(1, 50),
+        'website' => 'http://'.$faker->domainName,
+        'type' => $type,
+        'verified' => TRUE,
     ];
 });

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Group\Repository;
+namespace App\Http\Feedback\Repository;
 
-use App\Http\Group\Model\Group;
+use App\Http\Feedback\Model\Feedback;
 use Illuminate\Database\Eloquent\Collection;
 
-interface GroupInterface {
+interface FeedbackInterface {
     /**
      * Get's a organization by it's ID
      *
      * @param int|array
      *
-     * @return Group
+     * @return Feedback|null
      */
-    public function get($id) : Group;
+    public function get($id) : Feedback;
 
     /**
      * Get's all organizations.
@@ -35,17 +35,17 @@ interface GroupInterface {
      * @param int
      * @param array
      *
-     * @return Group
+     * @return void
      */
-    public function update($id, array $data) : Group;
+    public function update($id, array $data) : void;
 
     /**
      * Create a organization.
      *
      * @param array
      *
-     * @return Group
+     * @return void
      */
-    public function create($data) : Group;
+    public function create($data) : void ;
 
 }

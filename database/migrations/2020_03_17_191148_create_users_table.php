@@ -15,17 +15,25 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('firstName')->nullable();
+            $table->string('lastName')->nullable();
+            $table->string('avatar')->nullable();
             $table->string('email')->unique();
-            $table->string('city');
-            $table->string('precinct');
+            $table->string('city')->nullable();
+            $table->string('address')->nullable();
+            $table->string('occupation')->nullable();
             $table->string('password');
-            $table->integer('group_id')->unsigned()->nullable();
+            $table->integer('organization_id')->unsigned()->nullable();
             $table->boolean('approved')->default(FALSE);
+            $table->boolean('first_entrance')->default(TRUE);
+            $table->enum('role', [
+                'ADMIN',
+                'BASIC'
+            ])->default('BASIC');
             $table->timestamps();
-            $table->foreign('group_id')
+            $table->foreign('organization_id')
                 ->references('id')
-                ->on('groups');
+                ->on('organizations');
         });
     }
 

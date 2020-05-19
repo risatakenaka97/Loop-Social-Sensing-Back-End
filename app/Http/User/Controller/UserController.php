@@ -7,6 +7,7 @@ use App\Http\User\Request\UserLoginRequest;
 use App\Http\User\Request\UserStoreRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Lumen\Http\Request;
 use Laravel\Lumen\Routing\Controller;
 
 class UserController extends Controller {
@@ -21,7 +22,7 @@ class UserController extends Controller {
     /**
      * @return JsonResponse
      */
-    public function index()
+    public function index() : JsonResponse
     {
         return response()->json($this->user->all());
     }
@@ -30,13 +31,19 @@ class UserController extends Controller {
      *
      * @param UserStoreRequest $request
      *
-     * @return JsonResponse
      */
-    public function register(UserStoreRequest $request) : JsonResponse
+    public function store(UserStoreRequest $request)
     {
-        return response()->json($this->user->create($request->json()->all()), 200);
+        $this->user->create($request->json()->all());
     }
 
+    /**
+     * login user
+     *
+     * @param UserLoginRequest $request
+     *
+     * @return JsonResponse
+     */
     public function login(UserLoginRequest $request) : JsonResponse
     {
         $credentials = $request->only(['email', 'password']);
@@ -44,17 +51,32 @@ class UserController extends Controller {
         if(!$token = Auth::attempt($credentials)){
             return response()->json(['message' => 'Unauthorized'], 401);
         }
+        if (!Auth::user()->approved) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
 
-        return $this->respondWithToken($token);
+        return response()->json($this->user->tokenArray($token));
     }
 
-    protected function respondWithToken($token) : JsonResponse
+    /**
+     * Get info about user
+     *
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function info($id) : JsonResponse
     {
-        return response()->json([
-            'token' => $token,
-            'token_type' => 'Bearer',
-            'created_at' => time(),
-            'expires_in' => Auth::factory()->getTTL() * 60,
-        ], 200);
+        return response()->json($this->user->get($id));
+    }
+
+    /**
+     * @param Request $request
+     * @param int     $id
+     */
+    public function updateUser(Request $request, $id = NULL) : void
+    {
+        $userInfo = $request->json()->all();
+        $this->user->update($id ?? Auth::id(), $userInfo);
     }
 }

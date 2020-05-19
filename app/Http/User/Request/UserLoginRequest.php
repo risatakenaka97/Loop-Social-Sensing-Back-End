@@ -24,8 +24,7 @@ class UserLoginRequest extends BaseFormRequest {
     public function rules()
     {
         return [
-            'organization_id' => 'required|integer',
-            'name' => 'required|string',
+            'email' => 'required|string',
             'password' => 'required'
         ];
     }
@@ -38,9 +37,7 @@ class UserLoginRequest extends BaseFormRequest {
     public function messages()
     {
         return [
-            'organization_id.required' => 'Group id is required!',
-            'organization_id.integer' => 'Group id should be an integer!',
-            'name.required' => 'Name is required!',
+            'email.required' => 'Email is required!',
             'password.required' => 'Password is required!',
         ];
     }
@@ -49,7 +46,7 @@ class UserLoginRequest extends BaseFormRequest {
     {
         return [
             'email' => 'trim|lowercase',
-            'name' => 'trim|capitalize|escape'
+            'password' => 'trim|escape'
         ];
     }
 }

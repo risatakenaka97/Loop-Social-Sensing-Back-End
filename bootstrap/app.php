@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Group\ServiceProvider\GroupServiceProvider;
+use App\Http\Base\Middleware\CorsMiddleware;
+use App\Http\Feedback\ServiceProvider\FeedbackServiceProvider;
+use App\Http\Organization\ServiceProvider\OrganizationServiceProvider;
 use App\Http\User\ServiceProvider\UserServiceProvider;
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -9,7 +11,6 @@ require_once __DIR__.'/../vendor/autoload.php';
     dirname(__DIR__)
 ))->bootstrap();
 
-require_once 'groups.php';
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -24,6 +25,9 @@ require_once 'groups.php';
 $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
+
+$app->configure('organization_types');
+$app->configure('roles');
 
  $app->withFacades();
 
@@ -61,12 +65,12 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+ $app->middleware([
+     CorsMiddleware::class
+ ]);
 
  $app->routeMiddleware([
-     'auth' => App\Http\Middleware\Authenticate::class,
+     'auth' => App\Http\Base\Middleware\Authenticate::class,
  ]);
 
 /*
@@ -85,7 +89,8 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Urameshibr\Providers\FormRequestServiceProvider::class);
 $app->register(Waavi\Sanitizer\Laravel\SanitizerServiceProvider::class);
 $app->register(UserServiceProvider::class);
-$app->register(GroupServiceProvider::class);
+$app->register(OrganizationServiceProvider::class);
+$app->register(FeedbackServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -97,6 +102,24 @@ $app->register(GroupServiceProvider::class);
 | can respond to, as well as the controllers that may handle them.
 |
 */
+
+$app->router->group([
+    'namespace' => 'App\Http\User\Controller',
+], function ($router) {
+    require __DIR__.'/../routes/user/api.php';
+});
+
+$app->router->group([
+    'namespace' => 'App\Http\Organization\Controller',
+], function ($router) {
+    require __DIR__.'/../routes/organization/api.php';
+});
+
+$app->router->group([
+    'namespace' => 'App\Http\Feedback\Controller',
+], function ($router) {
+    require __DIR__.'/../routes/feedback/api.php';
+});
 
 $app->router->group([
     'namespace' => '',

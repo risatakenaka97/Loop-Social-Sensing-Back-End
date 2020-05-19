@@ -14,6 +14,9 @@
 /** @var Router $router */
 use Laravel\Lumen\Routing\Router;
 
-$router->get('/', function() use ($router) {
-    return view('layout');
+$router->group(['prefix' => 'api'], function(Router $router) {
+    $router->group(['prefix' => 'organization'], function(Router $router) {
+        $router->get('/', 'OrganizationController@index');
+        $router->post('/', 'OrganizationController@store');
+    });
 });

@@ -13,11 +13,11 @@ class CreateOrganizationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('organizations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->unique();
-            $table->integer('user_id')->unsigned();
-            $table->string('website');
+            $table->string('name')->unique()->nullable();
+            $table->integer('user_id')->unsigned()->unique()->nullable();
+            $table->string('website')->nullable();
             $table->unsignedSmallInteger('type');
             $table->boolean('verified')->default(FALSE);
             $table->timestamps();
@@ -31,6 +31,6 @@ class CreateOrganizationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('organizations');
     }
 }

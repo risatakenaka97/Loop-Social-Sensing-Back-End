@@ -2,7 +2,7 @@
 
 namespace App\Http\User\Model;
 
-use App\Http\Group\Model\Group;
+use App\Http\Organization\Model\Organization;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
@@ -23,13 +23,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name',
+        'firstName',
+        'lastName',
         'email',
+        'avatar',
         'city',
-        'precinct',
+        'address',
+        'occupation',
         'password',
-        'group_id',
-        'approved'
+        'organization_id',
+        'approved',
+        'first_entrance'
     ];
 
     /**
@@ -43,8 +47,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'updated_at'
     ];
 
-    public function group() {
-        $this->belongsTo(Group::class);
+    public function organization() {
+        return $this->belongsTo(Organization::class);
     }
 
     /**

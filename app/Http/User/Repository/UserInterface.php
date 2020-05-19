@@ -33,19 +33,27 @@ interface UserInterface {
      * Updates a $user.
      *
      * @param int
-     * @param array
+     * @param array $data
      *
-     * @return User
+     * @return void
      */
-    public function update($id, array $data) : User;
+    public function update($id, array $data) : void;
 
     /**
      * Create a user.
      *
      * @param array
      *
-     * @return User
+     * @return void
      */
-    public function create($data) : User;
+    public function create($data) : void;
 
+    /**
+     * Respond with token
+     *
+     * @param string $token
+     *
+     * @return array
+     */
+    public function tokenArray(string $token);
 }

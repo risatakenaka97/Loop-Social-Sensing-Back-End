@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Group\Model;
+namespace App\Http\Organization\Model;
 
 use App\Http\User\Model\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model {
+class Organization extends Model {
 
-    protected $table = 'groups';
+    protected $table = 'organizations';
 
     protected $appends = [
         'members'
@@ -39,7 +39,7 @@ class Group extends Model {
 
     public function users()
     {
-        return $this->hasMany(User::class,  'group_id');
+        return $this->hasMany(User::class,  'organization_id');
     }
 
     public function administrator()
@@ -51,7 +51,7 @@ class Group extends Model {
     {
         return $this->users()
                 ->where('approved', TRUE)
-                ->select('id', 'name')
+                ->select('id', 'firstName', 'lastName')
                 ->get()
                 ->toArray() ?? [];
     }

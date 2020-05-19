@@ -24,12 +24,14 @@ class UserStoreRequest extends BaseFormRequest {
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'firstName' => 'string',
+            'lastName' => 'string',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-            'city' => 'required|string',
-            'precinct' => 'required|string',
-            'organization_id' => 'integer|gt:0',
+            'password' => 'required|confirmed|min:6',
+            'city' => 'string',
+            'address' => 'string',
+            'occupation' => 'string',
+            'organization_id' => 'required|integer|gt:0',
         ];
     }
 
@@ -41,25 +43,26 @@ class UserStoreRequest extends BaseFormRequest {
     public function messages()
     {
         return [
-            'name.required' => 'Name is required!',
             'email.required' => 'Email is required!',
             'password.required' => 'Password is required!',
             'password.confirmed' => 'Password does not match',
-            'city.required' => 'City is required!',
-            'precinct.required' => 'Precinct is required!',
-            'organization_id.gt:0' => 'Group id should be greater then 0!',
-            'organization_id.integer' => 'Group id should be an integer!'
+            'password.min' => 'Password length must be greater then 6 characters',
+            'organization_id.required' => 'User should be assigned to organization',
+            'organization_id.gt:0' => 'organization id should be greater then 0!',
+            'organization_id.integer' => 'organization id should be an integer!'
         ];
     }
 
     public function filters()
     {
         return [
-            'name' => 'trim|capitalize|escape',
+            'firstName' => 'trim|capitalize|escape',
+            'lastName' => 'trim|capitalize|escape',
             'email' => 'trim|lowercase',
             'password' => fn($value, $options = []) => str_replace(" ", "", $value),
             'city' => 'trim|capitalize|escape',
-            'precinct' => 'trim|capitalize|escape',
+            'address' => 'trim|capitalize|escape',
+            'occupation' => 'trim|capitalize|escape',
         ];
     }
 }

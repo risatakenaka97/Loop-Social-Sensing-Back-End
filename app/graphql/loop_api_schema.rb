@@ -1,4 +1,6 @@
-class LoopSocialSensingBackEndSchema < GraphQL::Schema
+# frozen_string_literal: true
+
+class LoopApiSchema < GraphQL::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
 

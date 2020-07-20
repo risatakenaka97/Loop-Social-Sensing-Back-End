@@ -13,11 +13,12 @@ module Mutations
       return unless credentials
 
       user = User.find_by email: credentials[:email]
-
       return unless user
       return unless user.authenticate(credentials[:password])
 
-      token = JsonWebToken.encode("user-id:#{user.id}")
+      token = JsonWebToken.encode(data: "user-id:#{user.id}")
+
+      context[:session][:token] = token
 
       { user: user, token: token }
     end
